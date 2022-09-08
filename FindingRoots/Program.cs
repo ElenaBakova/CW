@@ -11,15 +11,15 @@ static (bool res, double A, double B, double N) ReadData()
 {
     Console.WriteLine("Please enter A - left bound and B - right bound");
     string[]? read = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
-    if (read.Length < 2 || !double.TryParse(read[0], out double A) || !double.TryParse(read[1], out double B))
+    if (read.Length < 2 || !double.TryParse(read[0], out double A) || !double.TryParse(read[1], out double B) || A > B)
     {
         Console.WriteLine("Invalid input\nPlease try again\n");
         return (false, 0, 0, 0);
     }
 
-    Console.WriteLine("Please enter N");
+    Console.WriteLine("Please enter N: N >= 2");
     read = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
-    if (read.Length < 1 || !double.TryParse(read[0], out double N) || N < 0)
+    if (read.Length < 1 || !double.TryParse(read[0], out double N) || N < 3)
     {
         Console.WriteLine("Invalid input\nPlease try again\n");
         return (false, 0, 0, 0);
@@ -49,6 +49,7 @@ while (true)
     foreach ((double left, double right) in separation.Result)
     {
         Bisection? bisection = new Bisection(left, right, EPS, func);
-        Console.WriteLine($"Iterations: {bisection.Iterations}\n{bisection.Result} -> {bisection.FuncResult}\n");
+        Console.WriteLine($"Iterations: {bisection.Iterations}\nApproximate root: {bisection.Result}");
+        Console.WriteLine($"Discrepancy: {bisection.Delta}\nLast segment length: {bisection.LastSegmentLength}\n");
     }
 }
