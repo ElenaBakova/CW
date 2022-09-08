@@ -30,19 +30,25 @@ static (bool res, double A, double B, double N) ReadData()
 
 while (true)
 {
-    (bool res, double A, double B, double N) input = ReadData();
-    if (!input.res)
+    (bool res, double A, double B, double N) = ReadData();
+    if (!res)
     {
         continue;
     }
-    RootSeparation? separation = new RootSeparation(input.A, input.B, input.N, func);
+
+    RootSeparation? separation = new(A, B, N, func);
     separation.Result.ForEach(segment => Console.WriteLine($"[{segment.left}; {segment.right}]"));
     Console.WriteLine($"Found {separation.Result.Count} segments\nWould you like to continue?\nY - continue\nN - try again");
-    var ans = Console.ReadLine();
+    string? ans = Console.ReadLine();
     if (ans is null || ans.Length == 0 || ans[0] == 'N' || ans[0] == 'n')
     {
         continue;
     }
 
     Console.WriteLine("Starting bisection method");
+    foreach ((double left, double right) in separation.Result)
+    {
+        Bisection? bisection = new Bisection(left, right, EPS, func);
+        Console.WriteLine($"Iterations: {bisection.Iterations}\n{bisection.Result} -> {bisection.FuncResult}\n");
+    }
 }
