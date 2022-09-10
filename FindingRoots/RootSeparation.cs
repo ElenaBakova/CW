@@ -5,7 +5,7 @@
 /// </summary>
 public class RootSeparation
 {
-    public List<(double left, double right)> Result { get; set; } = new List<(double left, double right)>();
+    public List<(double left, double right)> Result { get; private set; } = new List<(double left, double right)>();
 
     // private readonly double N;
     // private double counter = 0;
