@@ -72,7 +72,7 @@ while (true)
         continue;
     }
 
-    Console.WriteLine("Starting bisection method");
+    Console.WriteLine("-------------------Starting bisection method-------------------");
     foreach ((double left, double right) in separation.Result)
     {
         Bisection? bisection = new(left, right, EPS, func);
@@ -81,14 +81,24 @@ while (true)
         Console.WriteLine($"Discrepancy: {bisection.Delta:N9}\nLast segment length: {bisection.LastSegmentLength:N9}\n");
     }
 
-    Console.WriteLine("Starting Newtons method");
+    Console.WriteLine("-------------------Starting Newtons method-------------------");
     foreach ((double left, double right) in separation.Result)
     {
         double initPoint = FindInitPoint(left, right, func, funcSecondDerivative);
 
         NewtonsMethod? newtonsMethod = new(initPoint, EPS, 1, func, funcDerivative);
         Console.WriteLine($"Initial approximation: {initPoint:N3}\nIterations: {newtonsMethod.Iterations}");
-        Console.WriteLine($"Approximate root: {newtonsMethod.Result:N9}\nDiscrepancy: {newtonsMethod.Delta:N15}\n");
-        //Console.WriteLine($"{func(newtonsMethod.Result)}\n");
+        Console.WriteLine($"Approximate root: {newtonsMethod.Result:N15}\nDiscrepancy: {newtonsMethod.Delta:N15}\n");
+    }
+
+    Console.WriteLine("-------------------Starting modified Newtons method-------------------");
+    foreach ((double left, double right) in separation.Result)
+    {
+        double initPoint = FindInitPoint(left, right, func, funcSecondDerivative);
+        Console.WriteLine($"Init: {initPoint}");
+
+        ModifiedNewton? modifiedNewton = new(initPoint, EPS, func, funcDerivative(initPoint));
+        Console.WriteLine($"Initial approximation: {initPoint:N3}\nIterations: {modifiedNewton.Iterations}");
+        Console.WriteLine($"Approximate root: {modifiedNewton.Result:N15}\nDiscrepancy: {modifiedNewton.Delta:N15}\n");
     }
 }
