@@ -95,10 +95,17 @@ while (true)
     foreach ((double left, double right) in separation.Result)
     {
         double initPoint = FindInitPoint(left, right, func, funcSecondDerivative);
-        Console.WriteLine($"Init: {initPoint}");
 
         ModifiedNewton? modifiedNewton = new(initPoint, EPS, func, funcDerivative(initPoint));
         Console.WriteLine($"Initial approximation: {initPoint:N3}\nIterations: {modifiedNewton.Iterations}");
         Console.WriteLine($"Approximate root: {modifiedNewton.Result:N15}\nDiscrepancy: {modifiedNewton.Delta:N15}\n");
+    }
+
+    Console.WriteLine("-------------------Starting secant method-------------------");
+    foreach ((double left, double right) in separation.Result)
+    {
+        SecantMethod? secantMethod = new(left, right, EPS, func);
+        Console.WriteLine($"Initial approximation: {left:N3} and {right:N3}\nIterations: {secantMethod.Iterations}");
+        Console.WriteLine($"Approximate root: {secantMethod.Result:N15}\nDiscrepancy: {secantMethod.Delta:N15}\n");
     }
 }
