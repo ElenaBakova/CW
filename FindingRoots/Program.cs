@@ -53,7 +53,7 @@ static double FindInitPoint(double left, double right, Func<double, double> func
 }
 
 Console.WriteLine("Численные методы решения нелинейных уравнений");
-Console.WriteLine($"A = -5, B = 10, function: x - 10*sin(x), e = 1e-6\n");
+Console.WriteLine($"A = -5, B = 3, function: x - 10*sin(x), e = 1e-6\n");
 
 while (true)
 {
@@ -76,9 +76,9 @@ while (true)
     foreach ((double left, double right) in separation.Result)
     {
         Bisection? bisection = new(left, right, EPS, func);
-        Console.WriteLine($"Initial approximation: {left:N3} and {right:N3}");
-        Console.WriteLine($"Iterations: {bisection.Iterations}\nApproximate root: {bisection.Result:N9}");
-        Console.WriteLine($"Discrepancy: {bisection.Delta:N9}\nLast segment length: {bisection.LastSegmentLength:N9}\n");
+        Console.WriteLine($"Initial approximation: {(left + right) / 2:N3}");
+        Console.WriteLine($"Iterations: {bisection.Iterations}\nApproximate root: {bisection.Result:N15}");
+        Console.WriteLine($"Discrepancy: {bisection.Delta:N15}\nLast segment length: {bisection.LastSegmentLength:N15}\n");
     }
 
     Console.WriteLine("-------------------Starting Newtons method-------------------");
