@@ -24,6 +24,8 @@ public static class Interface
 
         GetPoint();
         GetDegree();
+
+        var interpolation = new Interpolation(numberOfValues, interpolationPoint, degreeOfPolynomial, interpolationTable);
     }
 
     private static void BuildTable()
@@ -38,7 +40,7 @@ public static class Interface
 
     private static void GetNumberOfValues()
     {
-        Console.WriteLine("Please enter number of values in table");
+        Console.WriteLine("\nPlease enter number of values in table");
         if (int.TryParse(Console.ReadLine(), out numberOfValues) == false)
         {
             Console.WriteLine("Invalid input. Please, try again");
@@ -49,7 +51,7 @@ public static class Interface
 
     private static void GetBoundaries()
     {
-        Console.WriteLine("Please enter a and b -- boundaries of the segment");
+        Console.WriteLine("\nPlease enter a and b -- boundaries of the segment");
         var input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (int.TryParse(input[0], out segment.a) == false || int.TryParse(input[1], out segment.b) == false)
         {
@@ -67,7 +69,7 @@ public static class Interface
 
     private static void GetPoint()
     {
-        Console.WriteLine("Please, enter interpolation point");
+        Console.WriteLine("\nPlease, enter interpolation point");
         if (double.TryParse(Console.ReadLine(), out interpolationPoint) == false)
         {
             Console.WriteLine("Invalid input. Please, try again");
@@ -78,7 +80,7 @@ public static class Interface
 
     private static void GetDegree()
     {
-        Console.WriteLine("Please, enter degree of polynomial. It should be less than number of values");
+        Console.WriteLine("\nPlease, enter degree of polynomial. It should be less than number of values");
         if (int.TryParse(Console.ReadLine(), out degreeOfPolynomial) == false || degreeOfPolynomial > numberOfValues)
         {
             Console.WriteLine("Invalid input. Please, try again");
