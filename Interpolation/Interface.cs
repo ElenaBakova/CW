@@ -2,10 +2,16 @@
 
 public static class Interface
 {
-    // m + 1
+    /// <summary>
+    /// m + 1 number of values in table
+    /// </summary>
     private static int numberOfValues;
     private static (int a, int b) segment;
     private static double interpolationPoint;
+
+    /// <summary>
+    /// n degree of interpolation polynomial
+    /// </summary>
     private static int degreeOfPolynomial;
     private static readonly List<(double x, double result)> interpolationTable = new();
     private static readonly Func<double, double> func = x =>
@@ -22,10 +28,29 @@ public static class Interface
         Console.WriteLine("Initial table of points");
         interpolationTable.ForEach(item => Console.WriteLine($"{item.x} -- {item.result}"));
 
-        GetPoint();
-        GetDegree();
+        do
+        {
+            GetPoint();
+            GetDegree();
 
-        var interpolation = new Interpolation(numberOfValues, interpolationPoint, degreeOfPolynomial, interpolationTable);
+            var interpolation = new Interpolation(numberOfValues, interpolationPoint, degreeOfPolynomial, interpolationTable);
+            Console.WriteLine($"\nThe value of interpolation polynomial. Lagrange form: {interpolation.LagrangeResult}");
+            Console.WriteLine($"\nThe error of interpolation: {Math.Abs(interpolation.LagrangeResult - func(interpolationPoint)):N20}");
+
+            Console.WriteLine("\nWould you like to change interpolation point and polynomial degree?\nY - start over\nN - exit");
+            while (true)
+            {
+                var read = Console.ReadLine() ?? "";
+                if (read == "Y")
+                {
+                    break;
+                }
+                if (read == "N")
+                {
+                    return;
+                }
+            }
+        } while (true);
     }
 
     private static void BuildTable()
@@ -41,7 +66,7 @@ public static class Interface
     private static void GetNumberOfValues()
     {
         Console.WriteLine("\nPlease enter number of values in table");
-        if (int.TryParse(Console.ReadLine(), out numberOfValues) == false)
+        if (int.TryParse(Console.ReadLine(), out numberOfValues) == false || numberOfValues < 2)
         {
             Console.WriteLine("Invalid input. Please, try again");
             GetNumberOfValues();
@@ -52,7 +77,8 @@ public static class Interface
     private static void GetBoundaries()
     {
         Console.WriteLine("\nPlease enter a and b -- boundaries of the segment");
-        var input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var read = Console.ReadLine() ?? "";
+        var input = read.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (int.TryParse(input[0], out segment.a) == false || int.TryParse(input[1], out segment.b) == false)
         {
             Console.WriteLine("Invalid input. Please, try again");
