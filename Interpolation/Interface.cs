@@ -3,7 +3,7 @@
 public static class Interface
 {
     /// <summary>
-    /// m + 1 number of values in table
+    /// m + 1 number of points in table
     /// </summary>
     private static int numberOfValues;
     private static (int a, int b) segment;
@@ -33,7 +33,7 @@ public static class Interface
             GetPoint();
             GetDegree();
 
-            var interpolation = new Interpolation(numberOfValues, interpolationPoint, degreeOfPolynomial, interpolationTable);
+            var interpolation = new Interpolation(interpolationPoint, degreeOfPolynomial, interpolationTable);
             Console.WriteLine($"\nThe value of interpolation polynomial. Lagrange form: {interpolation.LagrangeResult}");
             Console.WriteLine($"The error of interpolation: {Math.Abs(interpolation.LagrangeResult - func(interpolationPoint)):N20}");
 

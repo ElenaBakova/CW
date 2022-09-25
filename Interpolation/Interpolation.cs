@@ -2,16 +2,10 @@
 
 public class Interpolation
 {
-    private readonly int numberOfValues;
     private readonly double interpolationPoint;
     private readonly int degreeOfPolynomial;
     private readonly List<(double x, double result)> interpolationTable;
     private readonly List<List<double>> dividedDifferences = new();
-
-    private readonly Func<double, double> func = x =>
-    {
-        return Math.Sin(x) - (x * x / 2);
-    };
 
     /// <summary>
     /// Result of Lagrange polynomial in the interpolation point
@@ -23,9 +17,8 @@ public class Interpolation
     /// </summary>
     public double NewtonResult { get; private init; }
 
-    public Interpolation(int numberOfValues, double point, int degree, List<(double x, double result)> values)
+    public Interpolation(double point, int degree, List<(double x, double result)> values)
     {
-        this.numberOfValues = numberOfValues;
         interpolationPoint = point;
         degreeOfPolynomial = degree;
         interpolationTable = values;
