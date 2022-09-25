@@ -35,7 +35,10 @@ public static class Interface
 
             var interpolation = new Interpolation(numberOfValues, interpolationPoint, degreeOfPolynomial, interpolationTable);
             Console.WriteLine($"\nThe value of interpolation polynomial. Lagrange form: {interpolation.LagrangeResult}");
-            Console.WriteLine($"\nThe error of interpolation: {Math.Abs(interpolation.LagrangeResult - func(interpolationPoint)):N20}");
+            Console.WriteLine($"The error of interpolation: {Math.Abs(interpolation.LagrangeResult - func(interpolationPoint)):N20}");
+
+            Console.WriteLine($"\nThe value of interpolation polynomial. Newtons form: {interpolation.NewtonResult}");
+            Console.WriteLine($"The error of interpolation: {Math.Abs(interpolation.NewtonResult - func(interpolationPoint)):N20}");
 
             Console.WriteLine("\nWould you like to change interpolation point and polynomial degree?\nY - start over\nN - exit");
             while (true)
