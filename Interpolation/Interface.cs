@@ -110,7 +110,7 @@ public static class Interface
     private static void GetDegree()
     {
         Console.WriteLine("\nPlease, enter degree of polynomial. It should be less than number of values");
-        if (int.TryParse(Console.ReadLine(), out degreeOfPolynomial) == false || degreeOfPolynomial > numberOfValues)
+        if (int.TryParse(Console.ReadLine(), out degreeOfPolynomial) == false || degreeOfPolynomial >= numberOfValues)
         {
             Console.WriteLine("Invalid input. Please, try again");
             GetDegree();
