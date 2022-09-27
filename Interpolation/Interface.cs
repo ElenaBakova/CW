@@ -16,7 +16,7 @@ public static class Interface
     private static readonly List<(double x, double result)> interpolationTable = new();
     private static readonly Func<double, double> func = x =>
     {
-        return Math.Sin(x) - (x * x / 2);
+       return Math.Sin(x) - (x * x / 2);
     };
 
     public static void Run()

@@ -46,6 +46,7 @@ public class Interpolation
         for (int i = 0; i <= degreeOfPolynomial; i++)
         {
             result += dividedDifferences[i][0] * Product(i);
+            // Console.WriteLine($"---------------------{dividedDifferences[i][0]}");
         }
 
         return result;
@@ -78,7 +79,7 @@ public class Interpolation
             {
                 for (int j = 0; j <= degreeOfPolynomial - i; j++)
                 {
-                    var item = (dividedDifferences[i - 1][j + 1] - dividedDifferences[i - 1][j]) / (interpolationTable[j + 1].x - interpolationTable[j].x);
+                    var item = (dividedDifferences[i - 1][j + 1] - dividedDifferences[i - 1][j]) / (interpolationTable[j + i].x - interpolationTable[j].x);
                     dividedDifferences[i].Add(item);
                 }
             }
