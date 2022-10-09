@@ -45,7 +45,7 @@ public static class Interface
         BuildTable();
 
         Console.WriteLine("Initial table of points");
-        tableOfPoints.Sort((first, second) => first.x.CompareTo(second.x));
+        //tableOfPoints.Sort((first, second) => first.x.CompareTo(second.x));
         tableOfPoints.ForEach(item => Console.WriteLine($"{item.x} -- {item.y}"));
 
         var instance = new Differentiation(tableOfPoints, function);
@@ -72,7 +72,7 @@ public static class Interface
 
     private static void PrintInfoTable()
     {
-        Console.WriteLine("  x  /  f(x)  / f'(x)nd /  |f'(x)-f'(x)nd|  /  f' error  / f''(x)nd /  |f''(x)-f''(x)nd|  /  f'' error");
+        Console.WriteLine("  x  /  f(x)  / f'(x)nd /  |f'(x)-f'(x)nd|  /  f' error / f''(x)nd /  |f''(x)-f''(x)nd|  /  f'' error");
         for (int i = 0; i < tableOfPoints.Count; i++)
         {
             var secondDerivativeOutput = "";
@@ -83,11 +83,11 @@ public static class Interface
             else
             {
                 var error = Math.Abs(secondDerivative(tableOfPoints[i].x) - secondDerivativeValues[i]);
-                secondDerivativeOutput = $" {secondDerivativeValues[i]}  / {error} / {error / secondDerivative(tableOfPoints[i].x)}";
+                secondDerivativeOutput = $" {secondDerivativeValues[i]}  / {error} / {error / secondDerivative(tableOfPoints[i].x) * 100}";
             }
 
             var temp = Math.Abs(firstDerivative(tableOfPoints[i].x) - firstDerivativeValues[i]);
-            Console.WriteLine($" {tableOfPoints[i].x} / {tableOfPoints[i].y} / {firstDerivativeValues[i]} / {temp} / {temp / firstDerivative(tableOfPoints[i].x)} / {secondDerivativeOutput}");
+            Console.WriteLine($" {tableOfPoints[i].x} / {tableOfPoints[i].y} / {firstDerivativeValues[i]} / {temp} / {100 * temp / firstDerivative(tableOfPoints[i].x)} / {secondDerivativeOutput}");
         }
     }
 
