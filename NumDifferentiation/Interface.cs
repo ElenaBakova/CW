@@ -94,7 +94,7 @@ public static class Interface
     private static void GetNumberOfValues()
     {
         Console.WriteLine("\nPlease enter number of values in table");
-        while (int.TryParse(Console.ReadLine(), out numberOfValues) == false && numberOfValues < 2)
+        while (int.TryParse(Console.ReadLine(), out numberOfValues) == false || numberOfValues < 2)
         {
             Console.WriteLine("Invalid input. Please, try again");
         }
@@ -112,7 +112,7 @@ public static class Interface
     private static void GetStep()
     {
         Console.WriteLine("\nPlease enter h -- step");
-        while (double.TryParse(Console.ReadLine(), out step) == false && step <= 0)
+        while (double.TryParse(Console.ReadLine(), out step) == false || step <= 0)
         {
             Console.WriteLine("Invalid input. Please, try again");
         }
