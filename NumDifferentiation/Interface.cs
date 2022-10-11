@@ -83,11 +83,11 @@ public static class Interface
             else
             {
                 var error = Math.Abs(secondDerivative(tableOfPoints[i].x) - secondDerivativeValues[i]);
-                secondDerivativeOutput = $" {secondDerivativeValues[i]}  / {error} / {error / secondDerivative(tableOfPoints[i].x) * 100}";
+                secondDerivativeOutput = $" {secondDerivativeValues[i]:N10}  / {error:N10} / {error / secondDerivative(tableOfPoints[i].x) * 100:N10}\n";
             }
 
             var temp = Math.Abs(firstDerivative(tableOfPoints[i].x) - firstDerivativeValues[i]);
-            Console.WriteLine($" {tableOfPoints[i].x} / {tableOfPoints[i].y} / {firstDerivativeValues[i]} / {temp} / {100 * temp / firstDerivative(tableOfPoints[i].x)} / {secondDerivativeOutput}");
+            Console.WriteLine($" {tableOfPoints[i].x:N10} / {tableOfPoints[i].y:N10} / {firstDerivativeValues[i]:N10} / {temp:N10} / {100 * temp / firstDerivative(tableOfPoints[i].x):N10} / {secondDerivativeOutput}");
         }
     }
 
