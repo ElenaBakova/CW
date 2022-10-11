@@ -52,6 +52,9 @@ public static class Interface
         }
     }
 
+    /// <summary>
+    /// Finding X -- result of inversed interpolation
+    /// </summary>
     private static void FirstMethod()
     {
         int inversedDegree = 0;
@@ -63,6 +66,9 @@ public static class Interface
         Console.WriteLine($"Error: {Math.Abs(func(resultX) - pointValue):N15}");
     }
 
+    /// <summary>
+    /// Finding roots of P_n = F
+    /// </summary>
     private static void SecondMethod()
     {
         int degree = 0;
@@ -72,7 +78,7 @@ public static class Interface
 
         var polynomialFunction = new PolynomialFunction(degree, interpolationTable);
         Func<double, double> polynom = x => polynomialFunction.Newton(x) - pointValue;
-        var separatedRoots = new RootSeparation(segment.a, segment.b, 1000, polynom);
+        var separatedRoots = new RootSeparation(segment.a, segment.b, 100000, polynom);
         if (separatedRoots.Result == null || separatedRoots.Result.Count == 0)
         {
             Console.WriteLine("No segments was found");
@@ -82,7 +88,7 @@ public static class Interface
             foreach ((double left, double right) in separatedRoots.Result)
             {
                 Bisection? bisection = new(segment.a, segment.b, epsilon, polynom);
-                Console.WriteLine($"Approximate X: {bisection.Result:N15}");
+                Console.WriteLine($"Approximate root of P_n = F: {bisection.Result:N15}");
                 Console.WriteLine($"Error: {bisection.Delta:N15}\n");
             }
         }
