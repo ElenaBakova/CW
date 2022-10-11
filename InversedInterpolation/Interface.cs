@@ -32,24 +32,26 @@ public static class Interface
         Console.WriteLine("Initial table of points");
         interpolationTable.ForEach(item => Console.WriteLine($"{item.x} -- {item.y}"));
 
-        GetValue();
-        FirstMethod();
-        SecondMethod();
-
-        Console.WriteLine("\nWould you like to change data?\nY - start over\nN - exit");
-        while (true)
+        do
         {
-            string read = Console.ReadLine() ?? "";
-            if (read == "Y")
+            GetValue();
+            FirstMethod();
+            SecondMethod();
+
+            Console.WriteLine("\nWould you like to change data?\nY - start over\nN - exit");
+            while (true)
             {
-                Run();
-                return;
+                string read = Console.ReadLine() ?? "";
+                if (read == "Y")
+                {
+                    break;
+                }
+                else if (read == "N")
+                {
+                    return;
+                }
             }
-            else if (read == "N")
-            {
-                return;
-            }
-        }
+        } while (true);
     }
 
     /// <summary>
@@ -76,9 +78,9 @@ public static class Interface
         GetDegree(ref degree);
         GetEpsilon(ref epsilon);
 
-        var polynomialFunction = new PolynomialFunction(degree, interpolationTable);
-        Func<double, double> polynom = x => polynomialFunction.Newton(x) - pointValue;
-        var separatedRoots = new RootSeparation(segment.a, segment.b, 100000, polynom);
+        PolynomialFunction polynomialFunction = new(degree, interpolationTable);
+        double polynom(double x) => polynomialFunction.Newton(x) - pointValue;
+        RootSeparation separatedRoots = new(segment.a, segment.b, 100000, polynom);
         if (separatedRoots.Result == null || separatedRoots.Result.Count == 0)
         {
             Console.WriteLine("No segments was found");
@@ -149,7 +151,7 @@ public static class Interface
             Console.WriteLine("Invalid input. Please, try again");
         }
     }
-    
+
     private static void GetEpsilon(ref double temp)
     {
         Console.WriteLine("\nPlease, enter epsilon -- precision");
