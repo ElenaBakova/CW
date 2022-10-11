@@ -145,7 +145,7 @@ public static class Interface
 
     private static void GetDegree(ref int temp)
     {
-        Console.WriteLine("\nPlease, enter degree of polynomial. It should be less than number of values");
+        Console.WriteLine($"\nPlease, enter degree of polynomial. It should be less than {numberOfValues}");
         while (int.TryParse(Console.ReadLine(), out temp) == false || temp >= numberOfValues)
         {
             Console.WriteLine("Invalid input. Please, try again");
