@@ -72,13 +72,13 @@ public static class Interface
 
     private static void PrintInfoTable()
     {
-        Console.WriteLine("  x  /  f(x)  / f'(x)nd /  |f'(x)-f'(x)nd|  /  f' error / f''(x)nd /  |f''(x)-f''(x)nd|  /  f'' error");
+        Console.WriteLine("\n  x  /  f(x)  / f'(x)nd /  |f'(x)-f'(x)nd|  /  f' error / f''(x)nd /  |f''(x)-f''(x)nd|  /  f'' error");
         for (int i = 0; i < tableOfPoints.Count; i++)
         {
-            var secondDerivativeOutput = "";
+            var secondDerivativeOutput = "\n";
             if (i == 0 || i == tableOfPoints.Count - 1)
             {
-                secondDerivativeOutput = $"  --  /  --  /  --";
+                secondDerivativeOutput = $"  --  /  --  /  --\n";
             }
             else
             {
