@@ -48,9 +48,9 @@ public static class Interface
         //tableOfPoints.Sort((first, second) => first.x.CompareTo(second.x));
         tableOfPoints.ForEach(item => Console.WriteLine($"{item.x} -- {item.y}"));
 
-        var instance = new Differentiation(tableOfPoints, function);
-        firstDerivativeValues = instance.FirstDerivative();
-        secondDerivativeValues = instance.SecondDerivative();
+        var instance = new Differentiation(tableOfPoints);
+        firstDerivativeValues = Differentiation.FirstDerivative();
+        secondDerivativeValues = Differentiation.SecondDerivative();
 
         PrintInfoTable();
 

@@ -2,20 +2,14 @@
 
 public class Differentiation
 {
-    /// <summary>
-    /// Initial function
-    /// </summary>
-    private static Func<double, double> function = x => x;
-
     private static List<(double x, double y)> tableOfPoints = new();
 
-    public Differentiation(List<(double x, double y)> table, Func<double, double> func)
+    public Differentiation(List<(double x, double y)> table)
     {
         tableOfPoints = table;
-        function = func;
     }
 
-    public List<double> FirstDerivative()
+    public static List<double> FirstDerivative()
     {
         List<double> result = new();
 
@@ -27,7 +21,7 @@ public class Differentiation
         return result;
     }
 
-    public List<double> SecondDerivative()
+    public static List<double> SecondDerivative()
     {
         List<double> result = new();
 
