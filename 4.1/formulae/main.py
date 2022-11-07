@@ -51,6 +51,7 @@ def interpolation_formula():
 
 
 if __name__ == '__main__':
+    print(solve_system())
     print("Лабораторная работа 4.1\nВариант 1\nПриближённое вычисление интеграла по составным квадратурным формулам\n")
     function_string = "cos(x)*sqrt(x)"
     lower = 0
@@ -61,7 +62,7 @@ if __name__ == '__main__':
     print(f"1) 'Точное' значение интеграла: {precise_val}\n")
 
     simpsons_val = simpsons(lower, upper)
-    print(f"2) Значение интеграла по формуле Симпсона с тремя узлами: {simpsons_val}")
+    print(f"2) Значение интеграла по формуле Симпсона: {simpsons_val}")
     print(f"Фактическая погрешность: {abs(simpsons_val - precise_val)}\n")
 
     formula_val = interpolation_formula()
