@@ -29,9 +29,9 @@ public class Formulae
         MiddleRectangle = (limits.b - limits.a) * function((limits.a + limits.b) / 2);
         Trapezoidal = (limits.b - limits.a) / 2 * (function(limits.a) + function(limits.b));
 
-        double h = (limits.b - limits.a) / 3;
+        double h = (limits.b - limits.a) / 3.0;
         Simpsons = h / 2 * (function(limits.a) + function(limits.b) + (4 * function((limits.a + limits.b) / 2)));
-        ThreeEighths = (limits.b - limits.a) * ((function(limits.a) / 8) + (function(limits.b) / 8)
-            + (3 / 8 * function(limits.a + h)) + (3 / 8 * function(limits.a + (2 * h))));
+        ThreeEighths = (limits.b - limits.a) * ((function(limits.a) / 8.0) + (function(limits.b) / 8.0)
+            + (3.0 / 8 * function(limits.a + h)) + (3.0 / 8 * function(limits.a + (2 * h))));
     }
 }
