@@ -34,6 +34,7 @@ def check_formula():
     res = 0
     for i in range(3):
         res += ashes[i] * poly(points[i])
+    print(f"Точное значение для полинома: {integrate(poly, (x, 0, 1))}")
     print(f"Integral for polynom: {res}")
 
 
@@ -52,18 +53,19 @@ def interpolation_formula():
 
 if __name__ == '__main__':
     print(solve_system())
-    print("Лабораторная работа 4.1\nВариант 1\nПриближённое вычисление интеграла по составным квадратурным формулам\n")
+    print("Лабораторная работа 4.1\nВариант 1\nПриближённое вычисление интеграла по квадратурным формулам\n")
     function_string = "cos(x)*sqrt(x)"
     lower = 0
     upper = 1
     print(f"Интегрируемая функция: {function_string}\n")
+    print(f"Узлы:")
 
     precise_val = integrate_my_func(function_string, lower, upper)
     print(f"1) 'Точное' значение интеграла: {precise_val}\n")
 
-    simpsons_val = simpsons(lower, upper)
-    print(f"2) Значение интеграла по формуле Симпсона: {simpsons_val}")
-    print(f"Фактическая погрешность: {abs(simpsons_val - precise_val)}\n")
+    # simpsons_val = simpsons(lower, upper)
+    # print(f"2) Значение интеграла по формуле Симпсона: {simpsons_val}")
+    # print(f"Фактическая погрешность: {abs(simpsons_val - precise_val)}\n")
 
     formula_val = interpolation_formula()
     print(f"3) Значение интеграла по интерполяционной формуле: {formula_val}")
