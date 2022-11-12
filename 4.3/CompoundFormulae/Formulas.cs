@@ -4,15 +4,64 @@ public class Formulas
 {
     private static readonly Func<double, double> function = x => Math.Log(1 + x);
     private static readonly Func<double, double> antiderivative = x => (1 + x) * Math.Log(1 + x) - x;
+    private static Func<double, double> Derivative(int order)
+    {
+        return order switch
+        {
+            1 => x => 1 / (1 + x),
+            2 => x => -1 / Math.Pow(1 + x, 2),
+            3 => x => 2 / Math.Pow(1 + x, 3),
+            4 => x => -6 / Math.Pow(1 + x, 4),
+            _ => throw new ArgumentException()
+        };
+    }
 
-    /*private static readonly Func<double, double> function = x => x;
-    private static readonly Func<double, double> antiderivative = x => x * x / 2;*/
+    /*private static readonly Func<double, double> function = x => 100;
+    private static readonly Func<double, double> antiderivative = x => 100 * x;
+    private static Func<double, double> Derivative(int order)
+    {
+        return order switch
+        {
+            _ => x => 0.0
+        };
+    }*/
 
-    /*private static readonly Func<double, double> function = x => x * x;
-    private static readonly Func<double, double> antiderivative = x => x * x * x / 3;*/
+    /*private static readonly Func<double, double> function = x => 7 * x;
+    private static readonly Func<double, double> antiderivative = x => 7 * Math.Pow(x, 2) / 2.0;
+    private static Func<double, double> Derivative(int order)
+    {
+        return order switch
+        {
+            1 => x => 7,
+            _ => x => 0.0
+        };
+    }*/
 
-    /*private static readonly Func<double, double> function = x => x * x * x;
-    private static readonly Func<double, double> antiderivative = x => x * x * x * x / 4;*/
+    /*private static readonly Func<double, double> function = x => 7 * x * x;
+    private static readonly Func<double, double> antiderivative = x => 7 * Math.Pow(x, 3) / 3.0;
+    private static Func<double, double> Derivative(int order)
+    {
+        return order switch
+        {
+            1 => x => 14 * x,
+            2 => x => 14.0,
+            _ => x => 0.0
+        };
+    }*/
+
+    /*private static readonly Func<double, double> function = x => 8 * Math.Pow(x, 3) + 6 * Math.Pow(x, 2) + 1.0;
+    private static readonly Func<double, double> antiderivative = x => 2 * Math.Pow(x, 4) + 2 * Math.Pow(x, 3) + x;
+    private static Func<double, double> Derivative(int order)
+    {
+        return order switch
+        {
+            1 => x => 12 * x * (2 * x + 1),
+            2 => x => 48 * x + 12,
+            3 => x => 48.0,
+            4 => x => 0.0,
+            _ => throw new ArgumentException()
+        };
+    }*/
 
     public double PreciseValue = antiderivative(1) - antiderivative(0);
     public double LeftRectangle { get; init; }
