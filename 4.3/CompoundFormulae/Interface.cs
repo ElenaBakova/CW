@@ -2,12 +2,17 @@
 
 public class Interface
 {
+    // [A, B]
     private static (double a, double b) limits;
+
+    // h
+    private static double segmentLength = 0;
 
     public static void Run()
     {
         GetLimits();
-        var integrals = new Formulas(limits);
+        GetNumberOfSegments();
+        var integrals = new Formulas(limits, segmentLength);
         PrintValues(integrals);
 
         Console.WriteLine("\nВвести новые данные?\nY - да\nN - нет");
@@ -62,5 +67,18 @@ public class Interface
         {
             Console.Write("Некорректное значение: введите вещественное число, большее левого конца отрезка интегрирования: ");
         }
+    }
+
+    private static void GetNumberOfSegments()
+    {
+        Console.Write("Введите число промежутков деления отрезка интегрирования: ");
+
+        var numberOfSegments = 0;
+        while (!int.TryParse(Console.ReadLine(), out numberOfSegments) || numberOfSegments <= 0)
+        {
+            Console.Write("Некорректное значение: введите положительное целое число: ");
+        }
+
+        segmentLength = (limits.b - limits.a) / numberOfSegments;
     }
 }

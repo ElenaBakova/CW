@@ -63,16 +63,21 @@ public class Formulas
         };
     }*/
 
-    public double PreciseValue = antiderivative(1) - antiderivative(0);
+    private static double MonotonousFunctionAbsMax(Func<double, double> function, double left, double right)
+        => Math.Max(Math.Abs(function(right)), Math.Abs(function(left)));
+
+    private static double WeightFunction(double x) => 1;
+
+    public double PreciseValue { get; init; }
     public double LeftRectangle { get; init; }
     public double RightRectangle { get; init; }
     public double MiddleRectangle { get; init; }
     public double Trapezoidal { get; init; }
     public double Simpsons { get; init; }
-    public double ThreeEighths { get; init; }
 
-    public Formulas((double a, double b) limits)
+    public Formulas((double a, double b) limits, double segmentLength)
     {
+        PreciseValue = antiderivative(limits.b) - antiderivative(limits.a);
         LeftRectangle = (limits.b - limits.a) * function(limits.a);
         RightRectangle = (limits.b - limits.a) * function(limits.b);
         MiddleRectangle = (limits.b - limits.a) * function((limits.a + limits.b) / 2);
@@ -80,7 +85,5 @@ public class Formulas
 
         double h = (limits.b - limits.a) / 3.0;
         Simpsons = h / 2 * (function(limits.a) + function(limits.b) + (4 * function((limits.a + limits.b) / 2)));
-        ThreeEighths = (limits.b - limits.a) * ((function(limits.a) / 8.0) + (function(limits.b) / 8.0)
-            + (3.0 / 8 * function(limits.a + h)) + (3.0 / 8 * function(limits.a + (2 * h))));
     }
 }
