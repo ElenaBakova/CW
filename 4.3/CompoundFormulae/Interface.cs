@@ -5,14 +5,13 @@ public class Interface
     // [A, B]
     private static (double a, double b) limits;
 
-    // h
-    private static double segmentLength = 0;
+    private static int numberOfSegments = 0;
 
     public static void Run()
     {
         GetLimits();
         GetNumberOfSegments();
-        var integrals = new Formulas(limits, segmentLength);
+        var integrals = new Formulas(limits, numberOfSegments);
         PrintValues(integrals);
 
         Console.WriteLine("\nВвести новые данные?\nY - да\nN - нет");
@@ -41,17 +40,30 @@ public class Interface
                 $"Формула правых прямоугольников: {integrals.RightRectangle}\n" +
                 $"Формула средних прямоугольников: {integrals.MiddleRectangle}\n" +
                 $"Формула трапеций: {integrals.Trapezoidal}\n" +
-                $"Формула Симпсона: {integrals.Simpsons}\n" +
-                $"Формула трех восьмых: {integrals.ThreeEighths}\n");
+                $"Формула Симпсона: {integrals.Simpsons}\n");
 
-        Console.WriteLine("Погрешности");
+        Console.WriteLine("Абсолютные фактические погрешности:");
         Console.WriteLine(
-                $"Формула левых прямоугольников: {Math.Abs(j - integrals.LeftRectangle)}\n" +
-                $"Формула правых прямоугольников: {Math.Abs(j - integrals.RightRectangle)}\n" +
-                $"Формула средних прямоугольников: {Math.Abs(j - integrals.MiddleRectangle)}\n" +
-                $"Формула трапеций: {Math.Abs(j - integrals.Trapezoidal)}\n" +
-                $"Формула Симпсона: {Math.Abs(j - integrals.Simpsons)}\n" +
-                $"Формула трех восьмых: {Math.Abs(j - integrals.ThreeEighths)}\n");
+                $"Формула левых прямоугольников: {Math.Abs(j - integrals.LeftRectangle):N15}\n" +
+                $"Формула правых прямоугольников: {Math.Abs(j - integrals.RightRectangle):N15}\n" +
+                $"Формула средних прямоугольников: {Math.Abs(j - integrals.MiddleRectangle):N15}\n" +
+                $"Формула трапеций: {Math.Abs(j - integrals.Trapezoidal):N15}\n" +
+                $"Формула Симпсона: {Math.Abs(j - integrals.Simpsons):N15}\n");
+
+        Console.WriteLine("Относительные фактические погрешности:");
+        Console.WriteLine(
+                $"Формула левых прямоугольников: {Math.Abs(j - integrals.LeftRectangle) / Math.Abs(j):N15}\n" +
+                $"Формула правых прямоугольников: {Math.Abs(j - integrals.RightRectangle) / Math.Abs(j):N15}\n" +
+                $"Формула средних прямоугольников: {Math.Abs(j - integrals.MiddleRectangle) / Math.Abs(j):N15}\n" +
+                $"Формула трапеций: {Math.Abs(j - integrals.Trapezoidal) / Math.Abs(j):N15}\n" +
+                $"Формула Симпсона: {Math.Abs(j - integrals.Simpsons) / Math.Abs(j):N15}\n");
+
+        Console.WriteLine("Теоретические погрешности:");
+        Console.WriteLine(
+                $"Формула левых и правых прямоугольников: {integrals.LeftError:N15}\n" +
+                $"Формула средних прямоугольников: {integrals.MiddleError:N15}\n" +
+                $"Формула трапеций: {integrals.TrapezoidalError:N15}\n" +
+                $"Формула Симпсона: {integrals.SimpsonsError:N15}\n");
     }
 
     private static void GetLimits()
@@ -73,12 +85,11 @@ public class Interface
     {
         Console.Write("Введите число промежутков деления отрезка интегрирования: ");
 
-        var numberOfSegments = 0;
+        //var numberOfSegments = 0;
         while (!int.TryParse(Console.ReadLine(), out numberOfSegments) || numberOfSegments <= 0)
         {
             Console.Write("Некорректное значение: введите положительное целое число: ");
         }
-
-        segmentLength = (limits.b - limits.a) / numberOfSegments;
+        //segmentLength = (limits.b - limits.a) / numberOfSegments;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CompoundFormulae;
+﻿using System.Linq.Expressions;
+
+namespace CompoundFormulae;
 
 public class Formulas
 {
@@ -63,11 +65,6 @@ public class Formulas
         };
     }*/
 
-    private static double MonotonousFunctionAbsMax(Func<double, double> function, double left, double right)
-        => Math.Max(Math.Abs(function(right)), Math.Abs(function(left)));
-
-    private static double WeightFunction(double x) => 1;
-
     public double PreciseValue { get; init; }
     public double LeftRectangle { get; init; }
     public double RightRectangle { get; init; }
@@ -75,15 +72,56 @@ public class Formulas
     public double Trapezoidal { get; init; }
     public double Simpsons { get; init; }
 
-    public Formulas((double a, double b) limits, double segmentLength)
-    {
-        PreciseValue = antiderivative(limits.b) - antiderivative(limits.a);
-        LeftRectangle = (limits.b - limits.a) * function(limits.a);
-        RightRectangle = (limits.b - limits.a) * function(limits.b);
-        MiddleRectangle = (limits.b - limits.a) * function((limits.a + limits.b) / 2);
-        Trapezoidal = (limits.b - limits.a) / 2 * (function(limits.a) + function(limits.b));
+    public double LeftError { get; init; }
+    public double RightError { get; init; }
+    public double MiddleError { get; init; }
+    public double TrapezoidalError { get; init; }
+    public double SimpsonsError { get; init; }
 
-        double h = (limits.b - limits.a) / 3.0;
-        Simpsons = h / 2 * (function(limits.a) + function(limits.b) + (4 * function((limits.a + limits.b) / 2)));
+    private static double TheoreticalError(double left, double right, double constant, int ast, double segmentLength)
+    {
+        return (right - left) * MonotonousFunctionAbsMax(Derivative(ast), left, right) * constant * Math.Pow(segmentLength, ast);
+    }
+
+    private static double MonotonousFunctionAbsMax(Func<double, double> function, double left, double right)
+        => Math.Max(Math.Abs(function(left)), Math.Abs(function(right)));
+
+    public Formulas((double a, double b) limits, int numberOfSegments)
+    {
+        double hValue = (limits.b - limits.a) / numberOfSegments;
+
+        PreciseValue = antiderivative(limits.b) - antiderivative(limits.a);
+
+        double firstValue = 0.0;
+        double lastValue = function(limits.b);
+        double wSum = 0.0;
+        double qSum = 0.0;
+        for (var i = 0; i < numberOfSegments; ++i)
+        {
+            var value = function(limits.a + hValue * i);
+
+            if (i == 0)
+            {
+                firstValue = value;
+            }
+            else
+            {
+                wSum += value;
+            }
+
+            qSum += function(limits.a + hValue * i + hValue / 2);
+        }
+
+        LeftRectangle = hValue * (firstValue + wSum);
+        RightRectangle = hValue * (lastValue + wSum);
+        MiddleRectangle = hValue * qSum;
+        Trapezoidal = hValue * 0.5 * (firstValue + wSum * 2 + lastValue);
+        Simpsons = hValue / 6.0 * (firstValue + wSum * 2 + lastValue + 4 * qSum);
+
+        LeftError = TheoreticalError(limits.a, limits.b, 0.5, 1, hValue);
+        RightError = LeftError;
+        MiddleError = TheoreticalError(limits.a, limits.b, 1 / 24.0, 2, hValue);
+        TrapezoidalError = TheoreticalError(limits.a, limits.b, 1 / 12.0, 2, hValue);
+        SimpsonsError = TheoreticalError(limits.a, limits.b, 1 / 2880.0, 4, hValue);
     }
 }
