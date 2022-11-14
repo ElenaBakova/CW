@@ -5,14 +5,26 @@ public class Interface
     // [A, B]
     private static (double a, double b) limits;
 
+    // m
     private static int numberOfSegments = 0;
+
+    // l
+    private static int parametr = 0;
 
     public static void Run()
     {
         GetLimits();
         GetNumberOfSegments();
         var integrals = new Formulas(limits, numberOfSegments);
-        PrintValues(integrals);
+        PrintValues(integrals, numberOfSegments, true);
+
+        Console.WriteLine("---------------Значения с параметром m * l---------------");
+        GetParam();
+        var integralsNew = new Formulas(limits, numberOfSegments * parametr);
+        PrintValues(integralsNew, numberOfSegments * parametr, false);
+
+        Console.WriteLine("---------------Погрешности для уточненных значений---------------");
+        PrintErrors(integrals, integralsNew);
 
         Console.WriteLine("\nВвести новые данные?\nY - да\nN - нет");
         while (true)
@@ -30,9 +42,41 @@ public class Interface
         }
     }
 
-    private static void PrintValues(Formulas integrals)
+    private static void PrintErrors(Formulas integrals, Formulas integralsNew)
     {
-        Console.WriteLine($"Длина отрезка разбиения (h): {(limits.b - limits.a) / (numberOfSegments * 1.0)}");
+        double j = integrals.PreciseValue;
+        double leftError = Math.Abs(j - Clarify(integrals.LeftRectangle, integralsNew.LeftRectangle, 1));
+        double rightError = Math.Abs(j - Clarify(integrals.RightRectangle, integralsNew.RightRectangle, 1));
+        double middleError = Math.Abs(j - Clarify(integrals.MiddleRectangle, integralsNew.MiddleRectangle, 2));
+        double trapezoidalError = Math.Abs(j - Clarify(integrals.Trapezoidal, integralsNew.Trapezoidal, 2));
+        double simpsonsError = Math.Abs(j - Clarify(integrals.Simpsons, integralsNew.Simpsons, 4));
+
+        Console.WriteLine("Абсолютные фактические погрешности:");
+        Console.WriteLine(
+                $"Формула левых прямоугольников: {leftError:N15}\n" +
+                $"Формула правых прямоугольников: {rightError:N15}\n" +
+                $"Формула средних прямоугольников: {middleError:N15}\n" +
+                $"Формула трапеций: {trapezoidalError:N15}\n" +
+                $"Формула Симпсона: {simpsonsError:N15}\n");
+
+        Console.WriteLine("Относительные фактические погрешности:");
+        Console.WriteLine(
+                $"Формула левых прямоугольников: {leftError / Math.Abs(j):N15}\n" +
+                $"Формула правых прямоугольников: {rightError / Math.Abs(j):N15}\n" +
+                $"Формула средних прямоугольников: {middleError / Math.Abs(j):N15}\n" +
+                $"Формула трапеций: {trapezoidalError / Math.Abs(j):N15}\n" +
+                $"Формула Симпсона: {simpsonsError / Math.Abs(j):N15}\n");
+    }
+
+    private static double Clarify(double jh, double jhl, int rValue)
+    {
+        double lPowr = Math.Pow(parametr, rValue * 1.0);
+        return (lPowr * jhl - jh) / (lPowr - 1);
+    }
+
+    private static void PrintValues(Formulas integrals, int coefficient, bool flag)
+    {
+        Console.WriteLine($"\nДлина отрезка разбиения (h): {(limits.b - limits.a) / (coefficient * 1.0)}");
 
         double j = integrals.PreciseValue;
 
@@ -52,6 +96,11 @@ public class Interface
                 $"Формула трапеций: {Math.Abs(j - integrals.Trapezoidal):N15}\n" +
                 $"Формула Симпсона: {Math.Abs(j - integrals.Simpsons):N15}\n");
 
+        if (!flag)
+        {
+            return;
+        }
+
         Console.WriteLine("Относительные фактические погрешности:");
         Console.WriteLine(
                 $"Формула левых прямоугольников: {Math.Abs(j - integrals.LeftRectangle) / Math.Abs(j):N15}\n" +
@@ -66,6 +115,15 @@ public class Interface
                 $"Формула средних прямоугольников: {integrals.MiddleError:N15}\n" +
                 $"Формула трапеций: {integrals.TrapezoidalError:N15}\n" +
                 $"Формула Симпсона: {integrals.SimpsonsError:N15}\n");
+    }
+
+    private static void GetParam()
+    {
+        Console.Write("Введите параметр l: ");
+        while (!int.TryParse(Console.ReadLine(), out parametr))
+        {
+            Console.Write("Некорректное значение");
+        }
     }
 
     private static void GetLimits()
