@@ -29,7 +29,7 @@ static (bool res, double A, double B, double N) ReadData()
 
     Console.WriteLine("Please enter N: N >= 2");
     read = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
-    if (read.Length < 1 || !double.TryParse(read[0], out double N) || N < 3)
+    if (read.Length < 1 || !double.TryParse(read[0], out double N) || N < 2)
     {
         Console.WriteLine("Invalid input\nPlease try again\n");
         return (false, 0, 0, 0);
