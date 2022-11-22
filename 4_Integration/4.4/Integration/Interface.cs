@@ -51,6 +51,15 @@ public class Interface
         double trapezoidalError = Math.Abs(j - Clarify(integrals.Trapezoidal, integralsNew.Trapezoidal, 2));
         double simpsonsError = Math.Abs(j - Clarify(integrals.Simpsons, integralsNew.Simpsons, 4));
 
+        Console.WriteLine("Уточненные значения");
+        Console.WriteLine(
+                $"\nТочное значение: {integrals.PreciseValue:N15}\n" +
+                $"Формула левых прямоугольников: {Clarify(integrals.LeftRectangle, integralsNew.LeftRectangle, 1):N15}\n" +
+                $"Формула правых прямоугольников: {Clarify(integrals.RightRectangle, integralsNew.RightRectangle, 1):N15}\n" +
+                $"Формула средних прямоугольников: {Clarify(integrals.MiddleRectangle, integralsNew.MiddleRectangle, 2):N15}\n" +
+                $"Формула трапеций: {Clarify(integrals.Trapezoidal, integralsNew.Trapezoidal, 2):N15}\n" +
+                $"Формула Симпсона: {Clarify(integrals.Simpsons, integralsNew.Simpsons, 4):N15}\n");
+
         Console.WriteLine("Абсолютные фактические погрешности:");
         Console.WriteLine(
                 $"Формула левых прямоугольников: {leftError:N15}\n" +

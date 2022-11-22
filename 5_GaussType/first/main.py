@@ -91,6 +91,7 @@ def highest_precision():
     # print(f"A1 + A2 = mu_0: {coeff1 + coeff2 == mu[0]}")
 
     def f(a): return math.cos(a)
+    # def f(a): return a * a * a
 
     return coeff1 * f(roots[0]) + coeff2 * f(roots[1])
 
