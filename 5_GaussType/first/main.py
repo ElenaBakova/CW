@@ -1,4 +1,5 @@
 import math
+import secant
 
 from sympy import Symbol, integrate, solve
 
@@ -63,16 +64,6 @@ def interpolation_formula():
     return res
 
 
-# def secant(a=0, b=1, eps=0.00000001, func=function):
-#     while True:
-#         temp = a
-#         a -= func(a) / (func(a) - func(b)) * (a - b)
-#         b = temp
-#         if abs(a - b) < eps:
-#             break
-#     return a
-
-
 def moments():
     return (
         integrate("1", (x, 0, 1)).evalf(),
@@ -88,8 +79,10 @@ def highest_precision():
 
     a1 = (mu[0] * mu[3] - mu[2] * mu[1]) / (mu[1] * mu[1] - mu[2] * mu[0])
     a2 = (mu[2] * mu[2] - mu[3] * mu[1]) / (mu[1] * mu[1] - mu[2] * mu[0])
-    poly = x * x + a1 * x + a2
-    roots = solve(poly, x)
+
+    def polynom(a): return a * a + a1 * a + a2
+
+    roots = secant.count(0, 1, polynom)
     print(f"Корни x_k: {roots}")
 
     coeff1 = 1 / (roots[0] - roots[1]) * (mu[1] - roots[1] * mu[0])
