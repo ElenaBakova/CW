@@ -5,8 +5,13 @@ import numpy as np
 
 a, b = -1.0, 1.0
 E = 0.0000000001
-n = 1
+N = 1
 x = smp.Symbol('x', real=True)
+
+
+# создает сетку от a до b с шагом (b - a) / N
+def grid(a, b, N):
+    return np.linspace(a, b, N)
 
 
 def q(param: float):
@@ -32,22 +37,31 @@ if __name__ == '__main__':
     print(f'(x-2)u''/(x+2) + xu\' + (1 - sin(x))u = x^2')
 
     print('Введите размерность сетки')
-    n = int(input())
+    N = int(input())
 
-    h = (b - a) / n
+    h = (b - a) / N
     y = []
     u = []
-    for i in range(n):
+    for i in range(N):
         y.append(a + i * h)
         u.append(smp.Symbol(f'u{i}'))
 
     matrix = []
-    for i in range(0, n):
-        matrix.append([0 for j in range(n)])
-        if i == 0 or i == n - 1:
-            continue
-        matrix[i][i - 1] = 1.0 / (h ** 2) + q(y[i]) / (2.0 * h)
-        matrix[i][i] = - 2.0 / (h ** 2) - r(y[i])
-        matrix[i][i + 1] = 1.0 / (h ** 2) - q(y[i]) / (2.0 * h)
+    for i in range(0, N):
+        matrix.append([0 for j in range(N)])
+        matrix[i][i] = - 2.0 / (h ** 2) - r(y[i])  # u_n
+        if i != N - 1:
+            matrix[i][i + 1] = 1.0 / (h ** 2) + q(y[i]) / (2.0 * h)  # u_n+1
+        if i != 0:
+            matrix[i][i - 1] = 1.0 / (h ** 2) - q(y[i]) / (2.0 * h)  # u_n-1
 
-    print(matrix)
+    # print(matrix)
+
+    matrix = np.array(matrix, dtype='float')
+    right_side = np.array([f(y[j]) for j in range(N)], dtype='float')
+
+    # print(right_side)
+
+    result = np.linalg.solve(matrix, right_side)
+
+    print(result)
