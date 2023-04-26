@@ -123,8 +123,8 @@ def plot(a, b, current, intervals, errors, expected=None):
     solution_ax.set_ylabel('y', fontsize=20)
     solution_ax.plot(g, current, label='Найденное решение')
 
-    # if expected:
-    #     solution_ax.plot(g, expected(g), label='Точное решение')
+    if expected:
+        solution_ax.plot(g, expected(g), label='Точное решение')
     # solution_ax.legend(prop={'size': 20})
     #
     # error_ax.title.set_text('Зависимость ошибки от количества узлов сетки')
@@ -153,3 +153,21 @@ a, b = -1, 1
 alpha, beta = 0, 0
 x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-6, 10)
 plot(a, b, x, intervals, errors)
+
+
+# y'' - 2y' + y = 0
+def q(param): return -2
+
+
+def r(param): return 1
+
+
+def f(param): return 0
+
+
+expected = lambda x: 1 / 2 * math.exp(x - 1) * ((math.e ** 2) * (x - 1) + 20 * (x + 1))
+expected = np.vectorize(expected)
+a, b = -1, 1
+alpha, beta = -1, 20
+x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-8, max_iterations=11)
+plot(a, b, x, intervals, errors, expected)
