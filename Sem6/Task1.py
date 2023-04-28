@@ -138,36 +138,36 @@ def plot(a, b, current, intervals, errors, expected=None):
 
 ''''''
 
-
-# Вариант 6, (x − 2)/(x + 2)u′′+xu′+ (1−sin(x))u=x^2, u(−1) = u(1) = 0.
-def q(param): return param / (param - 2) * (param + 2)
-
-
-def r(param): return (1 - math.sin(param)) / (param - 2) * (param + 2)
+if __name__ == "__main__":
+    # Вариант 6, (x − 2)/(x + 2)u′′+xu′+ (1−sin(x))u=x^2, u(−1) = u(1) = 0.
+    def q(param): return param / (param - 2) * (param + 2)
 
 
-def f(param): return param ** 2 / (param - 2) * (param + 2)
+    def r(param): return (1 - math.sin(param)) / (param - 2) * (param + 2)
 
 
-a, b = -1, 1
-alpha, beta = 0, 0
-x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-6, 10)
-plot(a, b, x, intervals, errors)
+    def f(param): return param ** 2 / (param - 2) * (param + 2)
 
 
-# y'' - 2y' + y = 0
-def q(param): return -2
+    a, b = -1, 1
+    alpha, beta = 0, 0
+    x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-6, 10)
+    plot(a, b, x, intervals, errors)
 
 
-def r(param): return 1
+    # y'' - 2y' + y = 0
+    def q(param): return -2
 
 
-def f(param): return 0
+    def r(param): return 1
 
 
-expected = lambda x: 1 / 2 * math.exp(x - 1) * ((math.e ** 2) * (x - 1) + 20 * (x + 1))
-expected = np.vectorize(expected)
-a, b = -1, 1
-alpha, beta = -1, 20
-x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-8, max_iterations=11)
-plot(a, b, x, intervals, errors, expected)
+    def f(param): return 0
+
+
+    expected = lambda x: 1 / 2 * math.exp(x - 1) * ((math.e ** 2) * (x - 1) + 20 * (x + 1))
+    expected = np.vectorize(expected)
+    a, b = -1, 1
+    alpha, beta = -1, 20
+    x, intervals, errors = solve(a, b, q, r, f, alpha, beta, 1e-8, max_iterations=11)
+    plot(a, b, x, intervals, errors, expected)
