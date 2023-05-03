@@ -1,4 +1,5 @@
 import functools
+from math import sin, exp
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +7,6 @@ import scipy as sp
 import scipy.integrate
 import scipy.special
 import seaborn as sns
-from math import sin, exp
 
 import Task1
 
