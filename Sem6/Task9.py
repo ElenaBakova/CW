@@ -1,4 +1,4 @@
-from math import sin, cos, log
+from math import sin, cos
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -123,32 +123,6 @@ if __name__ == "__main__":
 
     # Время
     T = 1
-
-    # u = lambda x, t: x ** 3 + t ** 3
-    # f = lambda x, t: 3 * t ** 2 - k * 6 * x
-    #
-    # plot(u, k, f, L, T, 20, 20)
-    # plot(u, k, f, L, T, 60, 60)
-    #
-    # u = lambda x, t: t * sin(x)
-    # f = lambda x, t: (1 + k * t) * sin(x)
-    #
-    # plot(u, k, f, L, T, 20, 20)
-    # plot(u, k, f, L, T, 66, 66)
-    #
-    # u = lambda x, t: cos(t) * log(x + 1)
-    # f = lambda x, t: -sin(t) * log(x + 1) + k * cos(t) / (x + 1) ** 2
-    #
-    # plot(u, k, f, L, T, 20, 20)
-    #
-    # u = lambda x, t: x ** 2 - t ** 2
-    # f = lambda x, t: 2 * k - 2 * t
-    #
-    # plot(u, k, f, L, T, 20, 20)
-    #
-    # k = 0.035
-    #
-    # plot(u, k, f, L, T, 20, 20)
 
     k = 0.01
     L = 6
